@@ -6,6 +6,7 @@ package view;
 
 import controller.FRMGameController;
 import model.GameThread;
+import model.Sound;
 
 /**
  *
@@ -23,11 +24,15 @@ public class FRMGame extends javax.swing.JFrame {
 
     GameThread thread;
 
+    Sound sound;
+
     /**
      * Creates new form FRMGame
      */
     public FRMGame() {
         initComponents();
+        this.setSize(800, 450);
+
         panelMenu = new PanelMenuPrincipal();
         panelGame = new PanelGame();
         panelOptions = new PanelOptions();
@@ -48,8 +53,16 @@ public class FRMGame extends javax.swing.JFrame {
         frmGameController = new FRMGameController(this);
         escucharPaneles();
 
+        sound = new Sound();
+        if (FRMGameController.menuActive) {
+            sound.setFile(0);
+            sound.play();
+            sound.loop();
+        }
+
         thread = new GameThread(this);
         thread.start();
+
     }
 
     public void escucharPaneles() {
@@ -66,8 +79,6 @@ public class FRMGame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(820, 470));
-        setResizable(false);
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
         pack();
@@ -126,6 +137,10 @@ public class FRMGame extends javax.swing.JFrame {
 
     public PanelPickPlayer getPanelPickPlayer() {
         return panelPickPlayer;
+    }
+
+    public Sound getSound() {
+        return sound;
     }
 
 

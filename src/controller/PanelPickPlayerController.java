@@ -6,6 +6,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import model.CharacterPicker;
+import view.PanelPickPlayer;
 
 /**
  *
@@ -13,16 +16,52 @@ import java.awt.event.ActionListener;
  */
 public class PanelPickPlayerController implements ActionListener {
 
+    CharacterPicker characterPicker;
+    PanelPickPlayer panel;
+
+    public PanelPickPlayerController(PanelPickPlayer panel) {
+        characterPicker = new CharacterPicker("CHARACTER.DATA");
+        this.panel = panel;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("quit")) {
             System.exit(0);
         }
-        if (e.getActionCommand().equals("backMenu")) {
+        if (e.getActionCommand().equals("pickPlayer")) {
             FRMGameController.menuActive = true;
+            panel.setVisible(false);
         }
-        if (e.getActionCommand().equals("personaje1")) {
-            //grabar en archhivo la direccion de los aasets, y cargar los assets del personaje 
+        if (e.getActionCommand().equals("bird")) {
+            characterPicker.saveCharacter("bird");
+            FRMGameController.menuActive = true;
+            panel.setVisible(false);
+        }
+        if (e.getActionCommand().equals("dog1")) {
+            characterPicker.saveCharacter("dog1");
+            FRMGameController.menuActive = true;
+            panel.setVisible(false);
+        }
+        if (e.getActionCommand().equals("dog2")) {
+            characterPicker.saveCharacter("dog2");
+            FRMGameController.menuActive = true;
+            panel.setVisible(false);
+        }
+        if (e.getActionCommand().equals("punk")) {
+            characterPicker.saveCharacter("punk");
+            FRMGameController.menuActive = true;
+            panel.setVisible(false);
+        }
+        if (e.getActionCommand().equals("cyborg")) {
+            characterPicker.saveCharacter("cyborg");
+            FRMGameController.menuActive = true;
+            panel.setVisible(false);
+        }
+        if (e.getActionCommand().equals("biker")) {
+            characterPicker.saveCharacter("biker");
+            FRMGameController.menuActive = true;
+            panel.setVisible(false);
         }
     }
 

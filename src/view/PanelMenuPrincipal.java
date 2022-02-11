@@ -4,9 +4,10 @@
  */
 package view;
 
-
 import java.awt.event.ActionListener;
-
+import javax.swing.JButton;
+import model.GameThread;
+import model.Sound;
 
 /**
  *
@@ -14,15 +15,20 @@ import java.awt.event.ActionListener;
  */
 public class PanelMenuPrincipal extends javax.swing.JPanel {
 
+
     /**
      * Creates new form PanelMenuPrincipal
      */
-  
-    
     public PanelMenuPrincipal() {
-        initComponents();      
+        initComponents();
+
     }
 
+    public void musica(Sound sound) {
+        sound.setFile(0);
+        sound.play();
+        sound.loop();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,11 +39,15 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        start = new javax.swing.JButton();
-        pickPlayer = new javax.swing.JButton();
+        npc2 = new javax.swing.JLabel();
         topScorers = new javax.swing.JButton();
         options = new javax.swing.JButton();
+        start = new javax.swing.JButton();
+        pickPlayer = new javax.swing.JButton();
         quit = new javax.swing.JButton();
+        npc4 = new javax.swing.JLabel();
+        npc3 = new javax.swing.JLabel();
+        npc1 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         sidewalk = new javax.swing.JLabel();
         city = new javax.swing.JLabel();
@@ -46,11 +56,26 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(800, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        npc2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil3.gif"))); // NOI18N
+        add(npc2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 290, 50, -1));
+
+        topScorers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/top-scorers.gif"))); // NOI18N
+        topScorers.setActionCommand("topScorers");
+        topScorers.setBorderPainted(false);
+        topScorers.setContentAreaFilled(false);
+        add(topScorers, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, -1, -1));
+
+        options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/options.gif"))); // NOI18N
+        options.setActionCommand("options");
+        options.setBorderPainted(false);
+        options.setContentAreaFilled(false);
+        add(options, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, -1, 60));
+
         start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/start.gif"))); // NOI18N
         start.setActionCommand("start");
         start.setBorderPainted(false);
         start.setContentAreaFilled(false);
-        add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 150, 60));
+        add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, 150, 60));
 
         pickPlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/pick-player.gif"))); // NOI18N
         pickPlayer.setActionCommand("pickPlayer");
@@ -60,19 +85,7 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
                 pickPlayerActionPerformed(evt);
             }
         });
-        add(pickPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 320, -1));
-
-        topScorers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/top-scorers.gif"))); // NOI18N
-        topScorers.setActionCommand("topScorers");
-        topScorers.setBorderPainted(false);
-        topScorers.setContentAreaFilled(false);
-        add(topScorers, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, -1, -1));
-
-        options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/options.gif"))); // NOI18N
-        options.setActionCommand("options");
-        options.setBorderPainted(false);
-        options.setContentAreaFilled(false);
-        add(options, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, -1, -1));
+        add(pickPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(-300, 280, 320, -1));
 
         quit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/quit.gif"))); // NOI18N
         quit.setActionCommand("quit");
@@ -80,8 +93,17 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
         quit.setContentAreaFilled(false);
         add(quit, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, -1));
 
+        npc4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog-2/fast.gif"))); // NOI18N
+        add(npc4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-400, 360, -1, -1));
+
+        npc3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil5.gif"))); // NOI18N
+        add(npc3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 230, -1, -1));
+
+        npc1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil1.gif"))); // NOI18N
+        add(npc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 260, -1, -1));
+
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo.gif"))); // NOI18N
-        add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+        add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, -270, -1, 350));
 
         sidewalk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/sidewalk.png"))); // NOI18N
         add(sidewalk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -98,17 +120,126 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
     }//GEN-LAST:event_pickPlayerActionPerformed
 
     public void escuchar(ActionListener controller) {
-           start.addActionListener(controller);
-           options.addActionListener(controller);
-           topScorers.addActionListener(controller);
-           quit.addActionListener(controller);
-           pickPlayer.addActionListener(controller);
+        start.addActionListener(controller);
+        options.addActionListener(controller);
+        topScorers.addActionListener(controller);
+        quit.addActionListener(controller);
+        pickPlayer.addActionListener(controller);
+    }
+
+    public void transitionIn() {
+
+        if (getStart().getBounds().y >= 290) {
+            getStart().setLocation(getStart().getBounds().x, getStart().getBounds().y - 4);
+        } else {
+            
+           // GameThread.menuTransicionIn = false;
+            
+
+            if (npc1.getBounds().x >= -50) {
+                npc1.setLocation(npc1.getBounds().x - 1, npc1.getBounds().y);
+            } else {
+                npc1.setLocation(780, npc1.getBounds().y);
+            }
+
+           
+             if (npc2.getBounds().x >= -50) {
+                npc2.setLocation(npc2.getBounds().x - 1, npc2.getBounds().y);
+            } else {
+                npc2.setLocation(900, npc2.getBounds().y);
+            }
+             
+             if (npc3.getBounds().x >= -50) {
+                npc3.setLocation(npc3.getBounds().x - 1, npc3.getBounds().y);
+            } else {
+                npc3.setLocation(1300, npc3.getBounds().y);
+            }
+               if (npc4.getBounds().x <= 800) {
+                npc4.setLocation(npc4.getBounds().x + 3, npc4.getBounds().y);
+            } else {
+                npc4.setLocation(-1000, npc4.getBounds().y);
+            }
+            
+            
+        }
+        
+        
+
+        if (topScorers.getBounds().x >= 470) {
+            topScorers.setLocation(topScorers.getBounds().x - 6, topScorers.getBounds().y);
+        }
+        if (pickPlayer.getBounds().x <= 10) {
+            pickPlayer.setLocation(pickPlayer.getBounds().x + 6, pickPlayer.getBounds().y);
+        }
+        if (options.getBounds().y >= 370) {
+            options.setLocation(options.getBounds().x, options.getBounds().y - 6);
+        }
+        if (logo.getBounds().y <= -70) {
+            logo.setLocation(logo.getBounds().x, logo.getBounds().y + 16);
+        }
+    }
+    
+    
+    public void transitionOut() {
+//cambiarCoordenadas
+        if (getStart().getBounds().y >= 290) {
+            getStart().setLocation(getStart().getBounds().x, getStart().getBounds().y - 4);
+        } else {
+            
+           // GameThread.menuTransicionIn = false;
+            
+
+            if (npc1.getBounds().x >= -50) {
+                npc1.setLocation(npc1.getBounds().x - 1, npc1.getBounds().y);
+            } else {
+                npc1.setLocation(780, npc1.getBounds().y);
+            }
+
+           
+             if (npc2.getBounds().x >= -50) {
+                npc2.setLocation(npc2.getBounds().x - 1, npc2.getBounds().y);
+            } else {
+                npc2.setLocation(900, npc2.getBounds().y);
+            }
+             
+             if (npc3.getBounds().x >= -50) {
+                npc3.setLocation(npc3.getBounds().x - 1, npc3.getBounds().y);
+            } else {
+                npc3.setLocation(1300, npc3.getBounds().y);
+            }
+               if (npc4.getBounds().x <= 800) {
+                npc4.setLocation(npc4.getBounds().x + 3, npc4.getBounds().y);
+            } else {
+                npc4.setLocation(-1000, npc4.getBounds().y);
+            }
+            
+            
+        }
+        
+        
+
+        if (topScorers.getBounds().x >= 470) {
+            topScorers.setLocation(topScorers.getBounds().x - 6, topScorers.getBounds().y);
+        }
+        if (pickPlayer.getBounds().x <= 10) {
+            pickPlayer.setLocation(pickPlayer.getBounds().x + 6, pickPlayer.getBounds().y);
+        }
+        if (options.getBounds().y >= 370) {
+            options.setLocation(options.getBounds().x, options.getBounds().y - 6);
+        }
+        if (logo.getBounds().y <= -70) {
+            logo.setLocation(logo.getBounds().x, logo.getBounds().y + 16);
+        }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel city;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel npc1;
+    private javax.swing.JLabel npc2;
+    private javax.swing.JLabel npc3;
+    private javax.swing.JLabel npc4;
     private javax.swing.JButton options;
     private javax.swing.JButton pickPlayer;
     private javax.swing.JButton quit;
@@ -117,5 +248,9 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
     private javax.swing.JButton start;
     private javax.swing.JButton topScorers;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getStart() {
+        return start;
+    }
 
 }

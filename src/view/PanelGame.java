@@ -5,6 +5,9 @@
 package view;
 
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import model.Sound;
 
 /**
  *
@@ -17,6 +20,13 @@ public class PanelGame extends javax.swing.JPanel {
      */
     public PanelGame() {
         initComponents();
+    }
+
+    public void musica(Sound sound) {
+        sound.stop();
+        sound.setFile(1);
+        sound.play();
+        sound.loop();
     }
 
     /**
@@ -48,6 +58,11 @@ public class PanelGame extends javax.swing.JPanel {
 
         setMinimumSize(new java.awt.Dimension(800, 460));
         setPreferredSize(new java.awt.Dimension(800, 470));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/pause.png"))); // NOI18N
@@ -105,6 +120,11 @@ public class PanelGame extends javax.swing.JPanel {
         add(sky, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 449));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_formKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backMenu;
@@ -128,4 +148,5 @@ public class PanelGame extends javax.swing.JPanel {
  public void escuchar(ActionListener controller) {
         pause.addActionListener(controller);
     }
+
 }
