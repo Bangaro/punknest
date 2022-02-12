@@ -22,9 +22,8 @@ import model.Sound;
  */
 public class FRMGame extends javax.swing.JFrame {
 
-    public static int gameSpeed = 1;
-    
-    
+    public static int gameSpeed = 2;
+
     PanelMenuPrincipal panelMenu;
     PanelGame panelGame;
     PanelOptions panelOptions;
@@ -56,7 +55,7 @@ public class FRMGame extends javax.swing.JFrame {
      */
     public FRMGame() {
         initComponents();
-        this.setSize(800, 490);
+        this.setSize(800, 486);
 
         panelMenu = new PanelMenuPrincipal();
         panelGame = new PanelGame();
@@ -79,7 +78,7 @@ public class FRMGame extends javax.swing.JFrame {
 
         frmGameController = new FRMGameController(this);
         escucharPaneles();
-        
+
         thread = new GameThread(this);
         thread.start();
 
@@ -88,8 +87,6 @@ public class FRMGame extends javax.swing.JFrame {
     public void escucharPaneles() {
         this.panelMenu.escuchar(frmGameController);
     }
-    
- 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,6 +98,7 @@ public class FRMGame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -108,6 +106,7 @@ public class FRMGame extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -117,15 +116,31 @@ public class FRMGame extends javax.swing.JFrame {
 
         if (posicionPersonaje.equals("ABAJO")) {
             posicionPersonaje = "ARRIBA";
-            estadoPersonaje = "FAST";
+            estadoPersonaje = "MEDIUM";
         } else {
             posicionPersonaje = "ABAJO";
-            estadoPersonaje = "FAST";
-    
+            estadoPersonaje = "MEDIUM";
+
         }
 
-
     }//GEN-LAST:event_formMousePressed
+
+    private void boosterDestroyActive() {
+        if (!GameThread.isHurt) {
+            if (panelGame.getCharacterInGame().isBoosterActive()) {
+                estadoPersonaje = "ATTACK";
+            } else {
+                estadoPersonaje = "MEDIUM";
+            }
+        }
+
+    }
+
+    private void characterIsHurt() {
+        if (GameThread.isHurt) {
+            estadoPersonaje = "HURT";
+        }
+    }
 
     public void getCharacterPicked() {
         character = characterPicker.getCharacter();
@@ -153,16 +168,20 @@ public class FRMGame extends javax.swing.JFrame {
 
         if (posicionPersonaje.equals("ARRIBA")) {
             if (panelGame.getCharacter().getBounds().y >= 335) {
-                panelGame.getCharacter().setLocation(panelGame.getCharacter().getBounds().x, panelGame.getCharacter().getBounds().y - gameSpeed);
+                panelGame.getCharacter().setLocation(panelGame.getCharacter().getBounds().x, panelGame.getCharacter().getBounds().y - (gameSpeed - 1));
             }
 
         }
         if (posicionPersonaje.equals("ABAJO")) {
-            if (panelGame.getCharacter().getBounds().y <= 400) {
-                panelGame.getCharacter().setLocation(panelGame.getCharacter().getBounds().x, panelGame.getCharacter().getBounds().y + gameSpeed);
+            if (panelGame.getCharacter().getBounds().y <= 396) {
+                panelGame.getCharacter().setLocation(panelGame.getCharacter().getBounds().x, panelGame.getCharacter().getBounds().y + (gameSpeed - 1));
             }
 
         }
+
+        characterIsHurt();
+        boosterDestroyActive();
+
     }
 
     public void estadoPersonaje() {
@@ -244,10 +263,9 @@ public class FRMGame extends javax.swing.JFrame {
         return panelPickPlayer;
     }
 
-   // public Sound getSound() {
-   //    return sound;
-   // }
-
+    // public Sound getSound() {
+    //    return sound;
+    // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

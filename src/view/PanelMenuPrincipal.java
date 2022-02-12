@@ -53,6 +53,7 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
         city = new javax.swing.JLabel();
         sky = new javax.swing.JLabel();
 
+        setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -63,23 +64,27 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
         topScorers.setActionCommand("topScorers");
         topScorers.setBorderPainted(false);
         topScorers.setContentAreaFilled(false);
+        topScorers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(topScorers, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, -1, -1));
 
         options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/options.gif"))); // NOI18N
         options.setActionCommand("options");
         options.setBorderPainted(false);
         options.setContentAreaFilled(false);
+        options.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(options, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, -1, 60));
 
         start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/start.gif"))); // NOI18N
         start.setActionCommand("start");
         start.setBorderPainted(false);
         start.setContentAreaFilled(false);
+        start.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, 150, 60));
 
         pickPlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/pick-player.gif"))); // NOI18N
         pickPlayer.setActionCommand("pickPlayer");
         pickPlayer.setContentAreaFilled(false);
+        pickPlayer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pickPlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pickPlayerActionPerformed(evt);
@@ -91,6 +96,7 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
         quit.setActionCommand("quit");
         quit.setBorderPainted(false);
         quit.setContentAreaFilled(false);
+        quit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(quit, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, -1));
 
         npc4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog2/fast.gif"))); // NOI18N
@@ -103,7 +109,7 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
         add(npc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 260, -1, -1));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/logo.gif"))); // NOI18N
-        add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, -270, -1, 350));
+        add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, -270, -1, 350));
 
         sidewalk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/sidewalk.png"))); // NOI18N
         add(sidewalk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

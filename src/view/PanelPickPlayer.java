@@ -46,11 +46,13 @@ public class PanelPickPlayer extends javax.swing.JPanel {
         city = new javax.swing.JLabel();
         sky = new javax.swing.JLabel();
 
+        setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pickPlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/pick-player.gif"))); // NOI18N
         pickPlayer.setActionCommand("pickPlayer");
         pickPlayer.setContentAreaFilled(false);
+        pickPlayer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pickPlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pickPlayerActionPerformed(evt);
@@ -62,6 +64,7 @@ public class PanelPickPlayer extends javax.swing.JPanel {
         quit.setActionCommand("quit");
         quit.setBorderPainted(false);
         quit.setContentAreaFilled(false);
+        quit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(quit, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, -1));
 
         cyborg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/cyborg/presentation.gif"))); // NOI18N

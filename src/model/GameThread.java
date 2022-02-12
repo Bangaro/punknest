@@ -26,12 +26,24 @@ public class GameThread extends Thread {
     public static boolean gameTransicionIn = false;
     public static boolean gameTransicionOut = false;
 
+    //PARA AUMENTAR DE NIVEL, CADA 25 SEGUNDOS ---- ESTAN PUESTOS 18, PERO EN REALIDAD SON 25 POR EL DELAY TOTAL DEL PROGRAMA
     public static int level = 1;
-    public static int levelTime = 18;
-    public static int countTimer = 25;
-    
+    public static int timeLevel = 18;
+    public static int countLevelTimer = 25;
+
+    //PARA COLOCAR ANIMACIONES
+    //ANIMACION HERIDO
+    public static boolean isHurt = false;
+    public static int timeHurt = 3;
+    public static int countHurtTimer = 25;
+
+    //ANIMACION BOOSTER DESTROY
+    public static int timeBoosterDestroy = 7;
+    public static int countBoosterDestroyTimer = 25;
+
+    //ANIMACION BOOSTER LIFE
     public static boolean musicActive = true;
-    
+
     public static boolean inGame = false;
 
     public GameThread(FRMGame frame) {
@@ -47,8 +59,8 @@ public class GameThread extends Thread {
 
                 if (FRMGameController.menuActive) {
                     inGame = false;
-                    
-                    if(musicActive && !inGame){
+
+                    if (musicActive && !inGame) {
                         music(0);
                         musicActive = false;
                     }
@@ -57,18 +69,34 @@ public class GameThread extends Thread {
                     frame.getPanelOptions().setVisible(false);
                     frame.getPanelTopScorers().setVisible(false);
                     frame.getPanelPickPlayer().setVisible(false);
-              
+
                     if (menuTransicionIn) {
                         frame.getPanelMenu().transitionIn();
                     }
 
                 }
                 if (!FRMGameController.menuActive) {
-                    
-                    if(inGame && !musicActive){
+
+                    if (inGame && !musicActive) {
                         music(1);
                         musicActive = true;
+                        //Asigna la velocidad inicial del juego
+                        FRMGame.gameSpeed = 2;
                     }
+
+                    if (frame.getPanelGame().getCharacterInGame().isBoosterActive()) {
+                        if (timeBoosterDestroy == 7 && countBoosterDestroyTimer == 24) {
+                            music(2);
+                        }
+                        if (timeBoosterDestroy == 1 && countBoosterDestroyTimer == 1) {
+                            musicActive = false;
+                        }
+                        animationBoosterDestroy();
+                    }
+                    if (isHurt) {
+                        animationHurt();
+                    }
+
                     frame.getPanelGame().transitionGame();
                     frame.moveCharacter();
 
@@ -83,34 +111,60 @@ public class GameThread extends Thread {
     }
 
     private void setLevel() {
-
-        if (levelTime > 0) {
-
-            countTimer = countTimer - 1;
-            
-            if (countTimer <= 0) {
-                levelTime = levelTime - 1;
-                countTimer = 25;
+        if (timeLevel > 0) {
+            countLevelTimer = countLevelTimer - 1;
+            if (countLevelTimer <= 0) {
+                timeLevel = timeLevel - 1;
+                countLevelTimer = 25;
             }
         }
-
-        if (levelTime == 0) {
+        if (timeLevel == 0) {
             level += 1;
             FRMGame.gameSpeed += 1;
-            levelTime = 18;
+            timeLevel = 18;
         }
     }
-    
-     public void music(int i){
-            if(sound.getClip()){
-                sound.stop();
+
+    private void animationBoosterDestroy() {
+        if (timeBoosterDestroy > 0) {
+            countBoosterDestroyTimer = countBoosterDestroyTimer - 1;
+            if (countBoosterDestroyTimer <= 0) {
+                timeBoosterDestroy = timeBoosterDestroy - 1;
+                countBoosterDestroyTimer = 25;
             }
-            sound.setFile(i);
-            sound.play();
-            sound.loop();        
+        }
+        if (timeBoosterDestroy == 0) {
+            frame.getPanelGame().getCharacterInGame().setBoosterActive(false);
+            timeLevel = 18;
+            timeBoosterDestroy = 5;
+        }
     }
 
-     public Sound getSound(){
-         return sound;
-     }
+    private void animationHurt() {
+        if (timeHurt > 0) {
+            countHurtTimer = countHurtTimer - 1;
+            if (countHurtTimer <= 0) {
+                timeHurt = timeHurt - 1;
+                countHurtTimer = 25;
+            }
+        }
+        if (timeHurt == 0) {
+            isHurt = false;
+            timeHurt = 18;
+            timeHurt = 5;
+        }
+    }
+
+    public void music(int i) {
+        if (sound.getClip()) {
+            sound.stop();
+        }
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public Sound getSound() {
+        return sound;
+    }
 }
