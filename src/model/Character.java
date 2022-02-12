@@ -12,8 +12,12 @@ import java.io.Serializable;
  */
 public class Character implements Serializable{
     private boolean boosterActive;
+    private String booster;
+    private int boosterDuration;
+    
     private int life = 2;
     private boolean dead = false;
+    
     private int score;
     private String characterName;
     private String nickname;

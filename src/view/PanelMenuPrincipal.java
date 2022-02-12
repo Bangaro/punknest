@@ -93,7 +93,7 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
         quit.setContentAreaFilled(false);
         add(quit, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, -1));
 
-        npc4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog-2/fast.gif"))); // NOI18N
+        npc4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog2/fast.gif"))); // NOI18N
         add(npc4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-400, 360, -1, -1));
 
         npc3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil5.gif"))); // NOI18N

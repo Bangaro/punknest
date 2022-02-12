@@ -5,6 +5,14 @@
 package view;
 
 import controller.FRMGameController;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.net.URL;
+import java.util.ArrayList;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import model.CharacterPicker;
 import model.GameThread;
 import model.Sound;
 
@@ -14,6 +22,9 @@ import model.Sound;
  */
 public class FRMGame extends javax.swing.JFrame {
 
+    public static int gameSpeed = 1;
+    
+    
     PanelMenuPrincipal panelMenu;
     PanelGame panelGame;
     PanelOptions panelOptions;
@@ -22,16 +33,30 @@ public class FRMGame extends javax.swing.JFrame {
 
     FRMGameController frmGameController;
 
+    public static String posicionPersonaje = "";
+    public static String estadoPersonaje = "";
+
     GameThread thread;
 
-    Sound sound;
+    CharacterPicker characterPicker = new CharacterPicker("CHARACTER.DATA");
+
+    URL charactersURL[] = new URL[30];
+    String character;
+
+    Icon stop;
+    Icon slow;
+    Icon medium;
+    Icon fast;
+    Icon hurt;
+    Icon attack;
+    Icon dead;
 
     /**
      * Creates new form FRMGame
      */
     public FRMGame() {
         initComponents();
-        this.setSize(800, 450);
+        this.setSize(800, 490);
 
         panelMenu = new PanelMenuPrincipal();
         panelGame = new PanelGame();
@@ -44,6 +69,8 @@ public class FRMGame extends javax.swing.JFrame {
         this.add(panelGame);
         this.add(panelPickPlayer);
 
+        panelGame.getCharacter().setIcon(stop);
+
         panelGame.setVisible(false);
         panelOptions.setVisible(false);
         panelTopScorers.setVisible(false);
@@ -52,14 +79,7 @@ public class FRMGame extends javax.swing.JFrame {
 
         frmGameController = new FRMGameController(this);
         escucharPaneles();
-
-        sound = new Sound();
-        if (FRMGameController.menuActive) {
-            sound.setFile(0);
-            sound.play();
-            sound.loop();
-        }
-
+        
         thread = new GameThread(this);
         thread.start();
 
@@ -68,6 +88,8 @@ public class FRMGame extends javax.swing.JFrame {
     public void escucharPaneles() {
         this.panelMenu.escuchar(frmGameController);
     }
+    
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,10 +101,93 @@ public class FRMGame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        // TODO add your handling code here:
+
+        if (posicionPersonaje.equals("ABAJO")) {
+            posicionPersonaje = "ARRIBA";
+            estadoPersonaje = "FAST";
+        } else {
+            posicionPersonaje = "ABAJO";
+            estadoPersonaje = "FAST";
+    
+        }
+
+
+    }//GEN-LAST:event_formMousePressed
+
+    public void getCharacterPicked() {
+        character = characterPicker.getCharacter();
+    }
+
+    public void loadCharacter() {
+        try {
+            stop = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/stop.gif"));
+            slow = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/slow.gif"));
+            medium = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/medium.gif"));
+            fast = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/fast.gif"));
+            hurt = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/hurt.gif"));
+            attack = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/attack.gif"));
+            dead = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/dead.gif"));
+
+            panelGame.getCharacter().setIcon(stop);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public void moveCharacter() {
+        estadoPersonaje();
+
+        if (posicionPersonaje.equals("ARRIBA")) {
+            if (panelGame.getCharacter().getBounds().y >= 335) {
+                panelGame.getCharacter().setLocation(panelGame.getCharacter().getBounds().x, panelGame.getCharacter().getBounds().y - gameSpeed);
+            }
+
+        }
+        if (posicionPersonaje.equals("ABAJO")) {
+            if (panelGame.getCharacter().getBounds().y <= 400) {
+                panelGame.getCharacter().setLocation(panelGame.getCharacter().getBounds().x, panelGame.getCharacter().getBounds().y + gameSpeed);
+            }
+
+        }
+    }
+
+    public void estadoPersonaje() {
+        if (estadoPersonaje.equals("STOP")) {
+            panelGame.getCharacter().setIcon(stop);
+        }
+        if (estadoPersonaje.equals("SLOW")) {
+            panelGame.getCharacter().setIcon(slow);
+        }
+        if (estadoPersonaje.equals("MEDIUM")) {
+            panelGame.getCharacter().setIcon(medium);
+        }
+        if (estadoPersonaje.equals("FAST")) {
+            panelGame.getCharacter().setIcon(fast);
+        }
+        if (estadoPersonaje.equals("HURT")) {
+            panelGame.getCharacter().setIcon(hurt);
+        }
+        if (estadoPersonaje.equals("ATTACK")) {
+            panelGame.getCharacter().setIcon(attack);
+        }
+        if (estadoPersonaje.equals("DEAD")) {
+            panelGame.getCharacter().setIcon(dead);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -139,9 +244,9 @@ public class FRMGame extends javax.swing.JFrame {
         return panelPickPlayer;
     }
 
-    public Sound getSound() {
-        return sound;
-    }
+   // public Sound getSound() {
+   //    return sound;
+   // }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

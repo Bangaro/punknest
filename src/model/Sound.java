@@ -16,6 +16,7 @@ import javax.sound.sampled.Clip;
 public class Sound {
 
     Clip clip;
+    boolean clipCreated = false;
     URL soundURL[] = new URL[30];
 
     public Sound() {
@@ -29,6 +30,7 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
+            clipCreated = true;
         } catch (Exception e) {
         }
     }
@@ -43,5 +45,9 @@ public class Sound {
 
     public void stop() {
         clip.stop();
+    }
+    
+    public boolean getClip(){
+        return clipCreated;
     }
 }

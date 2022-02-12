@@ -4,10 +4,15 @@
  */
 package view;
 
+import controller.PanelGameController;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import model.Sound;
+import static view.FRMGame.posicionPersonaje;
 
 /**
  *
@@ -18,8 +23,13 @@ public class PanelGame extends javax.swing.JPanel {
     /**
      * Creates new form PanelGame
      */
+    PanelGameController controller;
+    Sound sound;
+
     public PanelGame() {
         initComponents();
+        controller = new PanelGameController(this);
+        escuchar(controller);
     }
 
     public void musica(Sound sound) {
@@ -27,6 +37,10 @@ public class PanelGame extends javax.swing.JPanel {
         sound.setFile(1);
         sound.play();
         sound.loop();
+    }
+
+    public void stopGameMusic() {
+        sound.stop();
     }
 
     /**
@@ -38,21 +52,37 @@ public class PanelGame extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        backMenu = new javax.swing.JButton();
         pause = new javax.swing.JButton();
         boosterAnnouncement = new javax.swing.JLabel();
         character = new javax.swing.JLabel();
         enemy = new javax.swing.JLabel();
-        obstacle2 = new javax.swing.JLabel();
-        obstacle1 = new javax.swing.JLabel();
-        booster3 = new javax.swing.JLabel();
-        booster2 = new javax.swing.JLabel();
-        booster1 = new javax.swing.JLabel();
+        boosterLife = new javax.swing.JLabel();
+        boosterMusic = new javax.swing.JLabel();
+        boosterDestroyObstacles = new javax.swing.JLabel();
+        obstacleNormal9 = new javax.swing.JLabel();
+        obstacleNormal8 = new javax.swing.JLabel();
+        obstacleNormal7 = new javax.swing.JLabel();
+        obstacleNormal6 = new javax.swing.JLabel();
+        obstacleNormal5 = new javax.swing.JLabel();
+        obstacleNormal4 = new javax.swing.JLabel();
+        obstacleNormal3 = new javax.swing.JLabel();
+        obstacleNormal2 = new javax.swing.JLabel();
+        obstacleNormal1 = new javax.swing.JLabel();
+        obstacleLethal = new javax.swing.JLabel();
         characterLife = new javax.swing.JLabel();
-        npc = new javax.swing.JLabel();
-        backMenu = new javax.swing.JLabel();
-        buildings2 = new javax.swing.JLabel();
-        buildings1 = new javax.swing.JLabel();
+        sidewalk2 = new javax.swing.JLabel();
         sidewalk = new javax.swing.JLabel();
+        npc = new javax.swing.JLabel();
+        npc3 = new javax.swing.JLabel();
+        npc4 = new javax.swing.JLabel();
+        npc5 = new javax.swing.JLabel();
+        npc2 = new javax.swing.JLabel();
+        buildings22 = new javax.swing.JLabel();
+        buildings2 = new javax.swing.JLabel();
+        buildings12 = new javax.swing.JLabel();
+        buildings1 = new javax.swing.JLabel();
+        city2 = new javax.swing.JLabel();
         city = new javax.swing.JLabel();
         sky = new javax.swing.JLabel();
 
@@ -65,6 +95,11 @@ public class PanelGame extends javax.swing.JPanel {
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        backMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon.png"))); // NOI18N
+        backMenu.setActionCommand("backMenu");
+        backMenu.setContentAreaFilled(false);
+        add(backMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
         pause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/pause.png"))); // NOI18N
         pause.setActionCommand("pause");
         pause.setBorderPainted(false);
@@ -75,43 +110,88 @@ public class PanelGame extends javax.swing.JPanel {
         add(boosterAnnouncement, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
 
         character.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/biker/stop.gif"))); // NOI18N
-        add(character, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 378, -1, 50));
+        add(character, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 40, 50));
 
         enemy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/enemigos/slow.gif"))); // NOI18N
-        add(enemy, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 338, -1, 50));
+        add(enemy, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, 50));
 
-        obstacle2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
-        add(obstacle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 350, -1, -1));
+        boosterLife.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/life.gif"))); // NOI18N
+        add(boosterLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(2200, 390, -1, -1));
 
-        obstacle1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile000.png"))); // NOI18N
-        add(obstacle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 370, -1, 50));
+        boosterMusic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/change-music.gif"))); // NOI18N
+        add(boosterMusic, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 400, -1, -1));
 
-        booster3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/life.gif"))); // NOI18N
-        add(booster3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
+        boosterDestroyObstacles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/piano.png"))); // NOI18N
+        add(boosterDestroyObstacles, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 400, -1, -1));
 
-        booster2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/change-music.gif"))); // NOI18N
-        add(booster2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, -1, -1));
+        obstacleNormal9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal9, new org.netbeans.lib.awtextra.AbsoluteConstraints(2200, 345, -1, -1));
 
-        booster1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/piano.png"))); // NOI18N
-        add(booster1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 390, -1, -1));
+        obstacleNormal8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal8, new org.netbeans.lib.awtextra.AbsoluteConstraints(2050, 370, -1, -1));
+
+        obstacleNormal7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal7, new org.netbeans.lib.awtextra.AbsoluteConstraints(2000, 400, -1, -1));
+
+        obstacleNormal6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1960, 350, -1, -1));
+
+        obstacleNormal5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 370, -1, -1));
+
+        obstacleNormal4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1700, 350, -1, -1));
+
+        obstacleNormal3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 390, -1, -1));
+
+        obstacleNormal2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 335, -1, -1));
+
+        obstacleNormal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile002.png"))); // NOI18N
+        add(obstacleNormal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 350, -1, -1));
+
+        obstacleLethal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/obstaculos/tile000.png"))); // NOI18N
+        add(obstacleLethal, new org.netbeans.lib.awtextra.AbsoluteConstraints(2500, 370, -1, 50));
 
         characterLife.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/life/life-2.png"))); // NOI18N
         add(characterLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
-        npc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil1.gif"))); // NOI18N
-        add(npc, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, -1, -1));
+        sidewalk2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/sidewalk.png"))); // NOI18N
+        add(sidewalk2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, -1, -1));
 
-        backMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon.png"))); // NOI18N
-        add(backMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        sidewalk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/sidewalk.png"))); // NOI18N
+        add(sidewalk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        npc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil1.gif"))); // NOI18N
+        add(npc, new org.netbeans.lib.awtextra.AbsoluteConstraints(801, 310, -1, -1));
+
+        npc3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil3.gif"))); // NOI18N
+        add(npc3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 320, -1, -1));
+
+        npc4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil4.gif"))); // NOI18N
+        add(npc4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 320, -1, -1));
+
+        npc5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil5.gif"))); // NOI18N
+        add(npc5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1350, 300, -1, -1));
+
+        npc2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/npcs/civil2.gif"))); // NOI18N
+        add(npc2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 300, 50, 50));
+
+        buildings22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/buildings2.png"))); // NOI18N
+        add(buildings22, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, -20, -1, -1));
 
         buildings2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/buildings2.png"))); // NOI18N
         add(buildings2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, 440));
 
-        buildings1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/buildings1.png"))); // NOI18N
-        add(buildings1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, -1));
+        buildings12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/buildings1.png"))); // NOI18N
+        add(buildings12, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, -1, -1));
 
-        sidewalk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/sidewalk.png"))); // NOI18N
-        add(sidewalk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        buildings1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/buildings1.png"))); // NOI18N
+        add(buildings1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        city2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/city.png"))); // NOI18N
+        add(city2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, -1, -1));
 
         city.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/city.png"))); // NOI18N
         add(city, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -122,31 +202,302 @@ public class PanelGame extends javax.swing.JPanel {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-     
+        if (evt.getKeyCode() == KeyEvent.VK_W) {
+            FRMGame.posicionPersonaje = "arriba";
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_S) {
+            FRMGame.posicionPersonaje = "abajo";
+        }
     }//GEN-LAST:event_formKeyPressed
+
+    public void transitionGame() {
+
+        // GameThread.menuTransicionIn = false;
+        city.setLocation(city.getBounds().x - FRMGame.gameSpeed, city.getBounds().y);
+        if (city.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            city.setLocation((800 - (FRMGame.gameSpeed)), 0);
+        }
+        city2.setLocation(city2.getBounds().x - FRMGame.gameSpeed, city2.getBounds().y);
+        if (city2.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            city2.setLocation((800 - (FRMGame.gameSpeed)), 0);
+        }
+
+        buildings1.setLocation(buildings1.getBounds().x - FRMGame.gameSpeed, buildings1.getBounds().y);
+        if (buildings1.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            buildings1.setLocation(800 - (FRMGame.gameSpeed), buildings1.getBounds().y);
+        }
+        buildings12.setLocation(buildings12.getBounds().x - FRMGame.gameSpeed, buildings12.getBounds().y);
+        if (buildings12.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            buildings12.setLocation(800 - (FRMGame.gameSpeed), buildings12.getBounds().y);
+        }
+
+        buildings2.setLocation(buildings2.getBounds().x - FRMGame.gameSpeed, buildings2.getBounds().y);
+        if (buildings2.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            buildings2.setLocation(800 - (FRMGame.gameSpeed), buildings2.getBounds().y);
+        }
+        buildings22.setLocation(buildings22.getBounds().x - FRMGame.gameSpeed, buildings22.getBounds().y);
+        if (buildings22.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            buildings22.setLocation(800 - (FRMGame.gameSpeed), buildings22.getBounds().y);
+        }
+
+        sidewalk.setLocation(sidewalk.getBounds().x - FRMGame.gameSpeed, sidewalk.getBounds().y);
+        if (sidewalk.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            sidewalk.setLocation(800 - (FRMGame.gameSpeed), sidewalk.getBounds().y);
+        }
+        sidewalk2.setLocation(sidewalk2.getBounds().x - FRMGame.gameSpeed, sidewalk2.getBounds().y);
+        if (sidewalk2.getBounds().x <= (-800 + FRMGame.gameSpeed)) {
+            sidewalk2.setLocation(800 - (FRMGame.gameSpeed), sidewalk2.getBounds().y);
+        }
+
+        npc.setLocation(npc.getBounds().x - (FRMGame.gameSpeed + 1), npc.getBounds().y);
+        if (npc.getBounds().x <= -20) {
+            npc.setLocation(900, npc.getBounds().y);
+        }
+        npc2.setLocation(npc2.getBounds().x - (FRMGame.gameSpeed + 2), npc2.getBounds().y);
+        if (npc2.getBounds().x <= -20) {
+            npc2.setLocation(1700, npc2.getBounds().y);
+        }
+        npc3.setLocation(npc3.getBounds().x - (FRMGame.gameSpeed + 1), npc3.getBounds().y);
+        if (npc3.getBounds().x <= -20) {
+            npc3.setLocation(900, npc3.getBounds().y);
+        }
+        npc4.setLocation(npc4.getBounds().x - (FRMGame.gameSpeed + 1), npc4.getBounds().y);
+        if (npc4.getBounds().x <= -20) {
+            npc4.setLocation(950, npc4.getBounds().y);
+        }
+        npc5.setLocation(npc5.getBounds().x - (FRMGame.gameSpeed + 1), npc5.getBounds().y);
+        if (npc5.getBounds().x <= -20) {
+            npc5.setLocation(1100, npc5.getBounds().y);
+        }
+
+        moveObstacles();
+        checkCollision();
+    }
+
+    public void checkCollision() {
+
+        int obstacle1Box[] = {(obstacleNormal1.getBounds().y), (obstacleNormal1.getBounds().y + 30), (obstacleNormal1.getBounds().x), (obstacleNormal1.getBounds().x + 48)};
+        int obstacle2Box[] = {(obstacleNormal2.getBounds().y - 2), (obstacleNormal2.getBounds().y + 2), (obstacleNormal2.getBounds().x), (obstacleNormal2.getBounds().x + 48)};
+        int obstacle3Box[] = {(obstacleNormal3.getBounds().y - 2), (obstacleNormal3.getBounds().y + 2), (obstacleNormal3.getBounds().x), (obstacleNormal3.getBounds().x + 48)};
+        int obstacle4Box[] = {(obstacleNormal4.getBounds().y - 2), (obstacleNormal4.getBounds().y + 2), (obstacleNormal4.getBounds().x), (obstacleNormal4.getBounds().x + 48)};
+        int obstacle5Box[] = {(obstacleNormal5.getBounds().y - 2), (obstacleNormal5.getBounds().y + 2), (obstacleNormal5.getBounds().x), (obstacleNormal5.getBounds().x + 48)};
+        int obstacle6Box[] = {(obstacleNormal6.getBounds().y - 2), (obstacleNormal6.getBounds().y + 2), (obstacleNormal6.getBounds().x), (obstacleNormal6.getBounds().x + 48)};
+        int obstacle7Box[] = {(obstacleNormal7.getBounds().y - 2), (obstacleNormal7.getBounds().y + 2), (obstacleNormal7.getBounds().x), (obstacleNormal7.getBounds().x + 48)};
+        int obstacle8Box[] = {(obstacleNormal8.getBounds().y - 2), (obstacleNormal8.getBounds().y + 2), (obstacleNormal8.getBounds().x), (obstacleNormal8.getBounds().x + 48)};
+        int obstacle9Box[] = {(obstacleNormal9.getBounds().y - 2), (obstacleNormal9.getBounds().y + 2), (obstacleNormal9.getBounds().x), (obstacleNormal9.getBounds().x + 48)};
+
+        int characterBox[] = {(character.getBounds().y + 20),(character.getBounds().y + 30), (character.getBounds().x + 8), (character.getBounds().x + 20)};
+
+        if (character.getBounds().y +20 >= obstacle1Box[0] && character.getBounds().y + 30 <= obstacle1Box[1] && characterBox[2] >= obstacle1Box[2] && characterBox[3] <= obstacle1Box[3] ) {
+            obstacleNormal1.setLocation(1300, obstacleNormal1.getBounds().y);
+          //  JOptionPane.showMessageDialog(null, "You hit");
+        }
+        if (character.getBounds().y >= obstacle2Box[0] && character.getBounds().y >= obstacle2Box[1]) {
+        }
+        if (character.getBounds().y >= obstacle3Box[0] && character.getBounds().y >= obstacle3Box[1]) {
+        }
+        if (character.getBounds().y >= obstacle4Box[0] && character.getBounds().y >= obstacle4Box[1]) {
+        }
+        if (character.getBounds().y >= obstacle5Box[0] && character.getBounds().y >= obstacle5Box[1]) {
+        }
+        if (character.getBounds().y >= obstacle6Box[0] && character.getBounds().y >= obstacle6Box[1]) {
+        }
+        if (character.getBounds().y >= obstacle7Box[0] && character.getBounds().y >= obstacle7Box[1]) {
+        }
+        if (character.getBounds().y >= obstacle8Box[0] && character.getBounds().y >= obstacle8Box[1]) {
+        }
+        if (character.getBounds().y >= obstacle9Box[0] && character.getBounds().y >= obstacle9Box[1]) {
+        }
+
+    }
+
+    public void checkBooster() {
+    }
+
+    public void moveObstacles() {
+        obstacleNormal1.setLocation(obstacleNormal1.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal1.getBounds().y);
+        if (obstacleNormal1.getBounds().x <= -20) {
+            obstacleNormal1.setVisible(true);
+            obstacleNormal1.setLocation(900, 335 + setObstacleY());
+        }
+
+        obstacleNormal2.setLocation(obstacleNormal2.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal2.getBounds().y);
+        if (obstacleNormal2.getBounds().x <= -50) {
+            obstacleNormal2.setVisible(true);
+            obstacleNormal2.setLocation(1000, 335 + setObstacleY());
+        }
+        obstacleNormal3.setLocation(obstacleNormal3.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal3.getBounds().y);
+        if (obstacleNormal3.getBounds().x <= -30) {
+            obstacleNormal3.setVisible(true);
+            obstacleNormal3.setLocation(1050, 335 + setObstacleY());
+        }
+        obstacleNormal4.setLocation(obstacleNormal4.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal4.getBounds().y);
+        if (obstacleNormal4.getBounds().x <= -50) {
+            obstacleNormal4.setVisible(true);
+            obstacleNormal4.setLocation(1170, 335 + setObstacleY());
+        }
+        obstacleNormal5.setLocation(obstacleNormal5.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal5.getBounds().y);
+        if (obstacleNormal5.getBounds().x <= -60) {
+            obstacleNormal5.setVisible(true);
+            obstacleNormal5.setLocation(1300, 335 + setObstacleY());
+        }
+        obstacleNormal6.setLocation(obstacleNormal6.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal6.getBounds().y);
+        if (obstacleNormal6.getBounds().x <= -30) {
+            obstacleNormal6.setVisible(true);
+            obstacleNormal6.setLocation(1350, 335 + setObstacleY());
+        }
+        obstacleNormal7.setLocation(obstacleNormal7.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal7.getBounds().y);
+        if (obstacleNormal7.getBounds().x <= -20) {
+            obstacleNormal7.setVisible(true);
+            obstacleNormal7.setLocation(1490, 335 + setObstacleY());
+        }
+        obstacleNormal8.setLocation(obstacleNormal8.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal8.getBounds().y);
+        if (obstacleNormal8.getBounds().x <= -50) {
+            obstacleNormal8.setVisible(true);
+            obstacleNormal8.setLocation(1500, 335 + setObstacleY());
+        }
+        obstacleNormal9.setLocation(obstacleNormal9.getBounds().x - (FRMGame.gameSpeed + 1), obstacleNormal9.getBounds().y);
+        if (obstacleNormal9.getBounds().x <= -250) {
+            obstacleNormal9.setVisible(true);
+            obstacleNormal9.setLocation(1600, 335 + setObstacleY());
+        }
+
+        //LETHAL
+        obstacleLethal.setLocation(obstacleLethal.getBounds().x - (FRMGame.gameSpeed + 1), obstacleLethal.getBounds().y);
+        if (obstacleLethal.getBounds().x <= -250) {
+            obstacleLethal.setLocation(2000, 335 + setObstacleY());
+        }
+
+        //LIFE
+        boosterLife.setLocation(boosterLife.getBounds().x - (FRMGame.gameSpeed + 1), boosterLife.getBounds().y);
+        if (boosterLife.getBounds().x <= -250) {
+            boosterLife.setLocation(2600, 335 + setObstacleY());
+        }
+
+        //BOOSTERS
+        boosterDestroyObstacles.setLocation(boosterDestroyObstacles.getBounds().x - (FRMGame.gameSpeed + 1), boosterDestroyObstacles.getBounds().y);
+        if (boosterDestroyObstacles.getBounds().x <= -250) {
+            boosterDestroyObstacles.setLocation(2000, 335 + setObstacleY());
+        }
+
+        //MUSIC
+        boosterMusic.setLocation(boosterMusic.getBounds().x - (FRMGame.gameSpeed + 1), boosterMusic.getBounds().y);
+        if (boosterMusic.getBounds().x <= -250) {
+            boosterMusic.setLocation(1800, 335 + setObstacleY());
+        }
+    }
+
+    public int setObstacleY() {
+        return new Random().nextInt(65);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel backMenu;
-    private javax.swing.JLabel booster1;
-    private javax.swing.JLabel booster2;
-    private javax.swing.JLabel booster3;
+    private javax.swing.JButton backMenu;
     private javax.swing.JLabel boosterAnnouncement;
+    private javax.swing.JLabel boosterDestroyObstacles;
+    private javax.swing.JLabel boosterLife;
+    private javax.swing.JLabel boosterMusic;
     private javax.swing.JLabel buildings1;
+    private javax.swing.JLabel buildings12;
     private javax.swing.JLabel buildings2;
+    private javax.swing.JLabel buildings22;
     private javax.swing.JLabel character;
     private javax.swing.JLabel characterLife;
     private javax.swing.JLabel city;
+    private javax.swing.JLabel city2;
     private javax.swing.JLabel enemy;
     private javax.swing.JLabel npc;
-    private javax.swing.JLabel obstacle1;
-    private javax.swing.JLabel obstacle2;
+    private javax.swing.JLabel npc2;
+    private javax.swing.JLabel npc3;
+    private javax.swing.JLabel npc4;
+    private javax.swing.JLabel npc5;
+    private javax.swing.JLabel obstacleLethal;
+    private javax.swing.JLabel obstacleNormal1;
+    private javax.swing.JLabel obstacleNormal2;
+    private javax.swing.JLabel obstacleNormal3;
+    private javax.swing.JLabel obstacleNormal4;
+    private javax.swing.JLabel obstacleNormal5;
+    private javax.swing.JLabel obstacleNormal6;
+    private javax.swing.JLabel obstacleNormal7;
+    private javax.swing.JLabel obstacleNormal8;
+    private javax.swing.JLabel obstacleNormal9;
     private javax.swing.JButton pause;
     private javax.swing.JLabel sidewalk;
+    private javax.swing.JLabel sidewalk2;
     private javax.swing.JLabel sky;
     // End of variables declaration//GEN-END:variables
  public void escuchar(ActionListener controller) {
         pause.addActionListener(controller);
+        backMenu.addActionListener(controller);
+    }
+
+    public JLabel getBooster1() {
+        return boosterDestroyObstacles;
+    }
+
+    public JLabel getBooster2() {
+        return boosterMusic;
+    }
+
+    public JLabel getBooster3() {
+        return boosterLife;
+    }
+
+    public JLabel getBoosterAnnouncement() {
+        return boosterAnnouncement;
+    }
+
+    public JLabel getBuildings1() {
+        return buildings1;
+    }
+
+    public JLabel getBuildings2() {
+        return buildings2;
+    }
+
+    public JLabel getCharacter() {
+        return character;
+    }
+
+    public JLabel getCharacterLife() {
+        return characterLife;
+    }
+
+    public JLabel getCity() {
+        return city;
+    }
+
+    public JLabel getEnemy() {
+        return enemy;
+    }
+
+    public JLabel getNpc() {
+        return npc;
+    }
+
+    public JLabel getObstacle1() {
+        return obstacleLethal;
+    }
+
+    public JLabel getObstacle2() {
+        return obstacleNormal1;
+    }
+
+    public JButton getPause() {
+        return pause;
+    }
+
+    public JLabel getSidewalk() {
+        return sidewalk;
+    }
+
+    public JLabel getSky() {
+        return sky;
+    }
+
+    public PanelGameController getController() {
+        return controller;
     }
 
 }

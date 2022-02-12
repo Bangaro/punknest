@@ -15,33 +15,33 @@ import view.FRMGame;
  * @author monge
  */
 public class FRMGameController implements ActionListener {
-    
+
     FRMGame frmGame;
     public static boolean menuActive = true;
-    
+
     public FRMGameController(FRMGame frmGame) {
         this.frmGame = frmGame;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("start")) {
+            GameThread.inGame = true;
             frmGame.getPanelGame().setVisible(true);
             frmGame.getPanelMenu().setVisible(false);
             frmGame.getPanelOptions().setVisible(false);
             frmGame.getPanelTopScorers().setVisible(false);
             frmGame.getPanelPickPlayer().setVisible(false);
             menuActive = false;
-            
-            frmGame.getPanelGame().musica(frmGame.getSound());
+
         }
         if (e.getActionCommand().equals("pause")) {
-            
+
         }
-        
+
         if (e.getActionCommand().equals("options")) {
             GameThread.menuTransicionIn = true;
-            
+
             frmGame.getPanelGame().setVisible(false);
             frmGame.getPanelMenu().setVisible(false);
             frmGame.getPanelOptions().setVisible(true);
@@ -51,14 +51,14 @@ public class FRMGameController implements ActionListener {
         }
         if (e.getActionCommand().equals("pickPlayer")) {
             GameThread.menuTransicionIn = true;
-            
+
             frmGame.getPanelGame().setVisible(false);
             frmGame.getPanelMenu().setVisible(false);
             frmGame.getPanelOptions().setVisible(false);
             frmGame.getPanelTopScorers().setVisible(false);
             frmGame.getPanelPickPlayer().setVisible(true);
             menuActive = false;
-            
+
         }
         if (e.getActionCommand().equals("topScorers")) {
             frmGame.getPanelGame().setVisible(false);
@@ -68,10 +68,10 @@ public class FRMGameController implements ActionListener {
             frmGame.getPanelPickPlayer().setVisible(false);
             menuActive = false;
         }
-        
+
         if (e.getActionCommand().equals("quit")) {
             System.exit(0);
         }
     }
-    
+
 }

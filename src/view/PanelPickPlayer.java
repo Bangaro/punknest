@@ -76,13 +76,13 @@ public class PanelPickPlayer extends javax.swing.JPanel {
         punk.setContentAreaFilled(false);
         add(punk, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, -1, -1));
 
-        dog1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog-1/presentation.gif"))); // NOI18N
+        dog1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog1/presentation.gif"))); // NOI18N
         dog1.setActionCommand("dog1");
         dog1.setBorderPainted(false);
         dog1.setContentAreaFilled(false);
         add(dog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, -1, -1));
 
-        dog2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog-2/presentation.gif"))); // NOI18N
+        dog2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/dog2/presentation.gif"))); // NOI18N
         dog2.setActionCommand("dog2");
         dog2.setBorderPainted(false);
         dog2.setContentAreaFilled(false);
