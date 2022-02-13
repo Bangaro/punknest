@@ -23,6 +23,8 @@ public class Sound {
         soundURL[0] = getClass().getResource("/assets/music/living-music.wav");
         soundURL[1] = getClass().getResource("/assets/music/main-music.wav");
         soundURL[2] = getClass().getResource("/assets/music/special-music.wav");
+        soundURL[3] = getClass().getResource("/assets/music/boosterActive.wav");
+        soundURL[4] = getClass().getResource("/assets/music/levelUp5seconds.wav");
     }
 
     public void setFile(int i) {
@@ -46,8 +48,8 @@ public class Sound {
     public void stop() {
         clip.stop();
     }
-    
-    public boolean getClip(){
+
+    public boolean getClip() {
         return clipCreated;
     }
 }

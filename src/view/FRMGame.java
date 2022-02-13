@@ -49,6 +49,11 @@ public class FRMGame extends javax.swing.JFrame {
     Icon hurt;
     Icon attack;
     Icon dead;
+    
+    public static Icon life2;
+    public static Icon life1;
+    public static Icon life0;
+  
 
     /**
      * Creates new form FRMGame
@@ -156,13 +161,26 @@ public class FRMGame extends javax.swing.JFrame {
             attack = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/attack.gif"));
             dead = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/dead.gif"));
 
-            panelGame.getCharacter().setIcon(stop);
+            panelGame.getCharacter().setIcon(slow);
         } catch (Exception e) {
 
         }
-
     }
+    
+     public void loadLifeGifs() {
+        try {
+            life0 = new ImageIcon(getClass().getResource("/assets/misc/life/life0.png"));
+            life1 = new ImageIcon(getClass().getResource("/assets/misc/life/life1.png"));
+            life2 = new ImageIcon(getClass().getResource("/assets/misc/life/life2.png"));            
 
+  
+        } catch (Exception e) {
+
+        }
+    }
+    
+    
+   
     public void moveCharacter() {
         estadoPersonaje();
 
@@ -237,10 +255,19 @@ public class FRMGame extends javax.swing.JFrame {
         return panelPickPlayer;
     }
 
-    // public Sound getSound() {
-    //    return sound;
-    // }
+    public Icon getLife2() {
+        return life2;
+    }
 
+    public Icon getLife1() {
+        return life1;
+    }
+
+    public Icon getLife0() {
+        return life0;
+    }
+
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

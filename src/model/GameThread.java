@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.FRMGame;
+import view.PanelGame;
 
 /**
  *
@@ -19,6 +20,8 @@ public class GameThread extends Thread {
 
     FRMGame frame;
     Sound sound;
+
+    public static boolean announcementDisplay = false;
 
     public static boolean characterDead = false;
     //booleans para activar transiciones
@@ -30,7 +33,7 @@ public class GameThread extends Thread {
 
     //PARA AUMENTAR DE NIVEL, CADA 25 SEGUNDOS ---- ESTAN PUESTOS 18, PERO EN REALIDAD SON 25 POR EL DELAY TOTAL DEL PROGRAMA
     public static int level = 1;
-    public static int timeLevel = 18;
+    public static int timeLevel = 25;
     public static int countLevelTimer = 25;
 
     //PARA COLOCAR ANIMACIONES
@@ -49,11 +52,11 @@ public class GameThread extends Thread {
     public static int countEnemyMovement = 25;
 
     //MUSIC SPECIAL CHANGE
-    public static boolean specialMusic = false;
-
     public static boolean musicActive = true;
 
     public static boolean inGame = false;
+
+    public static boolean musicSpecial = false;
 
     public GameThread(FRMGame frame) {
         this.frame = frame;
@@ -62,10 +65,11 @@ public class GameThread extends Thread {
 
     public void run() {
         try {
+
             while (true) {
                 frame.getCharacterPicked();
+                frame.loadLifeGifs();
                 frame.loadCharacter();
-
                 if (FRMGameController.menuActive) {
                     inGame = false;
 
@@ -87,7 +91,7 @@ public class GameThread extends Thread {
                 if (!FRMGameController.menuActive) {
 
                     if (!characterDead) {
-                        frame.getPanelGame().score();
+                        frame.getPanelGame().setCharacterLife();
                         enemyMovement();
                         frame.getPanelGame().boosterActive();
                         frame.getPanelGame().charactherHurt();
@@ -95,15 +99,15 @@ public class GameThread extends Thread {
                         if (inGame && !musicActive && !FRMGameController.menuActive) {
                             music(1);
                             musicActive = true;
-                            //Asigna la velocidad inicial del juego
                             FRMGame.gameSpeed = 2;
+                        } else {
+                            if (musicSpecial) {
+                                music(2);
+                                musicSpecial = false;
+                            }
                         }
 
                         if (frame.getPanelGame().getCharacterInGame().isBoosterActive()) {
-                            if (specialMusic) {
-                                music(2);
-                            }
-
                             animationBoosterDestroy();
                         }
                         if (isHurt) {
@@ -116,7 +120,8 @@ public class GameThread extends Thread {
                         setLevel();
 
                     } else {
-                        JOptionPane.showMessageDialog(null,"");
+                        //LOIGICA Y PANEL DEAD
+                        JOptionPane.showMessageDialog(null, "");
                     }
 
                 }
@@ -130,16 +135,32 @@ public class GameThread extends Thread {
     private void setLevel() {
         if (timeLevel > 0) {
             countLevelTimer = countLevelTimer - 1;
+
+            setScore();
+
             if (countLevelTimer <= 0) {
                 timeLevel = timeLevel - 1;
                 countLevelTimer = 25;
+            }
+
+            if (timeLevel == 7 && countLevelTimer == 1) {
+                frame.getPanelGame().levelUp();
             }
         }
         if (timeLevel == 0) {
             level += 1;
             FRMGame.gameSpeed += 1;
-            timeLevel = 18;
+            timeLevel = 25;
         }
+    }
+
+    private void setScore() {
+
+        if ((timeLevel % 2 == 0) && countLevelTimer == 1) {
+            PanelGame.characterScore = PanelGame.characterScore + 1;
+            frame.getPanelGame().score();
+        }
+
     }
 
     private void animationBoosterDestroy() {
@@ -150,7 +171,7 @@ public class GameThread extends Thread {
                 countBoosterDestroyTimer = 25;
             }
         }
-        if (timeBoosterDestroy == 0 ) {
+        if (timeBoosterDestroy == 0) {
             frame.getPanelGame().getCharacterInGame().setBoosterActive(false);
             timeLevel = 18;
             timeBoosterDestroy = 5;

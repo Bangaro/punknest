@@ -6,9 +6,12 @@ package view;
 
 import controller.PanelGameController;
 import java.awt.Color;
+import java.awt.Label;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,17 +29,18 @@ public class PanelGame extends javax.swing.JPanel {
     /**
      * Creates new form PanelGame
      */
-    PanelGameController controller;
-    Sound sound;
-    Character characterInGame;
-    boolean collision = false;
-    int characterScore = 0;
+    private PanelGameController controller;
+    private Sound sound;
+    private Character characterInGame;
+    private boolean collision = false;
+    public static int characterScore = 0;
 
     public PanelGame() {
         initComponents();
         characterInGame = new Character(false, 0, "", "", "");
         controller = new PanelGameController(this);
         escuchar(controller);
+        sound = new Sound();
     }
 
     public void musica(Sound sound) {
@@ -108,7 +112,7 @@ public class PanelGame extends javax.swing.JPanel {
         score.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         score.setFont(new java.awt.Font("Digital-7 Mono", 1, 24)); // NOI18N
         score.setForeground(new java.awt.Color(255, 204, 51));
-        score.setText("SCORE");
+        score.setText("SCORE:0");
         add(score, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 150, 30));
 
         backMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon.png"))); // NOI18N
@@ -124,7 +128,7 @@ public class PanelGame extends javax.swing.JPanel {
         pause.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(pause, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, -1, -1));
 
-        boosterAnnouncement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/announcement/booster-active.gif"))); // NOI18N
+        boosterAnnouncement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/announcement/blank.gif"))); // NOI18N
         add(boosterAnnouncement, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, -1, -1));
 
         character.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/biker/stop.gif"))); // NOI18N
@@ -134,10 +138,10 @@ public class PanelGame extends javax.swing.JPanel {
         add(enemy, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, 50));
 
         boosterLife.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/life.gif"))); // NOI18N
-        add(boosterLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(2200, 390, -1, -1));
+        add(boosterLife, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 390, -1, -1));
 
         boosterMusic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/change-music.gif"))); // NOI18N
-        add(boosterMusic, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 400, -1, -1));
+        add(boosterMusic, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 400, -1, -1));
 
         boosterDestroyObstacles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/boosters/piano.png"))); // NOI18N
         boosterDestroyObstacles.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -319,6 +323,7 @@ public class PanelGame extends javax.swing.JPanel {
         int obstacle7Box[] = {(obstacleNormal7.getBounds().y), (obstacleNormal7.getBounds().y + 30), (obstacleNormal7.getBounds().x), (obstacleNormal7.getBounds().x + 48)};
         int obstacle8Box[] = {(obstacleNormal8.getBounds().y), (obstacleNormal8.getBounds().y + 30), (obstacleNormal8.getBounds().x), (obstacleNormal8.getBounds().x + 48)};
         int obstacle9Box[] = {(obstacleNormal9.getBounds().y), (obstacleNormal9.getBounds().y + 30), (obstacleNormal9.getBounds().x), (obstacleNormal9.getBounds().x + 48)};
+        int obstacleLethalBox[] = {(obstacleLethal.getBounds().y), (obstacleLethal.getBounds().y + 30), (obstacleLethal.getBounds().x), (obstacleLethal.getBounds().x + 48)};
 
         int characterBox[] = {(character.getBounds().y + 10), (character.getBounds().y + 30), (character.getBounds().x + 8), (character.getBounds().x + 20)};
 
@@ -412,10 +417,21 @@ public class PanelGame extends javax.swing.JPanel {
                 GameThread.isHurt = false;
             }
         }
+        
+          if (characterBox[0] >= obstacleLethalBox[0] && characterBox[1] <= obstacleLethalBox[1] && characterBox[2] >= obstacleLethalBox[2] && characterBox[3] <= obstacleLethalBox[3]) {
+            obstacleLethal.setLocation(2000, obstacleLethal.getBounds().y);
+            if (!characterInGame.isBoosterActive()) {
+                characterInGame.setLife(0);
+                GameThread.characterDead = true;
+            } else {
+                characterScore += 10;
+                GameThread.isHurt = false;
+            }
+        }
         checkBooster();
 
         if (collision && !characterInGame.isBoosterActive()) {
-            characterInGame.setLife(characterInGame.getLife() - 1);     
+            characterInGame.setLife(characterInGame.getLife() - 1);
             if (characterInGame.getLife() == 0) {
                 GameThread.characterDead = true;
             }
@@ -431,26 +447,67 @@ public class PanelGame extends javax.swing.JPanel {
     public void checkBooster() {
 
         int boosterDestryBox[] = {(boosterDestroyObstacles.getBounds().y - 15), (boosterDestroyObstacles.getBounds().y + 20), (boosterDestroyObstacles.getBounds().x), (boosterDestroyObstacles.getBounds().x + 48)};
-        int boosterLifeBox[] = {(boosterLife.getBounds().y), (boosterLife.getBounds().y + 30), (boosterLife.getBounds().x), (boosterLife.getBounds().x + 48)};
-        int boosterMusicBox[] = {(boosterMusic.getBounds().y), (boosterMusic.getBounds().y + 30), (boosterMusic.getBounds().x), (boosterMusic.getBounds().x + 48)};
+        int boosterLifeBox[] = {(boosterLife.getBounds().y - 15), (boosterLife.getBounds().y + 20), (boosterLife.getBounds().x), (boosterLife.getBounds().x + 48)};
+        int boosterMusicBox[] = {(boosterMusic.getBounds().y - 15), (boosterMusic.getBounds().y + 20), (boosterMusic.getBounds().x), (boosterMusic.getBounds().x + 48)};
+
         int characterBox[] = {(character.getBounds().y + 10), (character.getBounds().y + 30), (character.getBounds().x + 8), (character.getBounds().x + 20)};
 
         if (characterBox[0] >= boosterDestryBox[0] && characterBox[1] <= boosterDestryBox[1] && characterBox[2] >= boosterDestryBox[2] && characterBox[3] <= boosterDestryBox[3]) {
             boosterDestroyObstacles.setLocation(1700, boosterDestroyObstacles.getBounds().y);
             characterInGame.setBoosterActive(true);
         }
+
+        if (characterBox[0] >= boosterLifeBox[0] && characterBox[1] <= boosterLifeBox[1] && characterBox[2] >= boosterLifeBox[2] && characterBox[3] <= boosterLifeBox[3]) {
+            boosterLife.setLocation(2000, boosterLife.getBounds().y);
+            if (characterInGame.getLife() == 1) {
+                characterInGame.setLife(characterInGame.getLife() + 1);
+            }
+        }
+        if (characterBox[0] >= boosterMusicBox[0] && characterBox[1] <= boosterMusicBox[1] && characterBox[2] >= boosterMusicBox[2] && characterBox[3] <= boosterMusicBox[3]) {
+            boosterMusic.setLocation(2000, boosterLife.getBounds().y + 300);
+
+            GameThread.musicSpecial = true;
+
+        }
     }
 
     public void boosterActive() {
         if (characterInGame.isBoosterActive()) {
             character.setLocation(character.getBounds().x + 1, character.getBounds().y);
+            if (GameThread.announcementDisplay) {
+                sound.setFile(3);
+                sound.play();
+                GameThread.announcementDisplay = false;
+            }
+        } else {
+            GameThread.announcementDisplay = true;
         }
+    }
+
+    public void levelUp() {
+        sound.stop();
+        sound.setFile(4);
+        sound.play();
     }
 
     public void charactherHurt() {
         if (GameThread.isHurt) {
             character.setLocation(character.getBounds().x - FRMGame.gameSpeed, character.getBounds().y);
         }
+    }
+
+    public void setCharacterLife() {
+        int life = characterInGame.getLife();
+        if (life == 2) {
+            characterLife.setIcon(FRMGame.life2);
+        }
+        if (life == 1) {
+            characterLife.setIcon(FRMGame.life1);
+        }
+        if (life == 0) {
+            characterLife.setIcon(FRMGame.life0);
+        }
+
     }
 
     public void moveObstacles() {
@@ -520,10 +577,13 @@ public class PanelGame extends javax.swing.JPanel {
         }
 
         //MUSIC
-        boosterMusic.setLocation(boosterMusic.getBounds().x - (FRMGame.gameSpeed + 1), boosterMusic.getBounds().y);
-        if (boosterMusic.getBounds().x <= -250) {
-            boosterMusic.setLocation(1800, 335 + setObstacleY());
+        if (!GameThread.musicSpecial) {
+            boosterMusic.setLocation(boosterMusic.getBounds().x - (FRMGame.gameSpeed + 1), boosterMusic.getBounds().y);
+            if (boosterMusic.getBounds().x <= -250) {
+                boosterMusic.setLocation(1800, 335 + setObstacleY());
+            }
         }
+
     }
 
     public int setObstacleY() {
@@ -642,6 +702,10 @@ public class PanelGame extends javax.swing.JPanel {
 
     public Character getCharacterInGame() {
         return characterInGame;
+    }
+
+    public Label getScore() {
+        return score;
     }
 
 }
