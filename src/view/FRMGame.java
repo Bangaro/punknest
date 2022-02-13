@@ -33,7 +33,7 @@ public class FRMGame extends javax.swing.JFrame {
     FRMGameController frmGameController;
 
     public static String posicionPersonaje = "";
-    public static String estadoPersonaje = "";
+    public static String estadoPersonaje = "SLOW";
 
     GameThread thread;
 
@@ -55,6 +55,7 @@ public class FRMGame extends javax.swing.JFrame {
      */
     public FRMGame() {
         initComponents();
+        this.setVisible(true);
         this.setSize(800, 486);
 
         panelMenu = new PanelMenuPrincipal();
@@ -151,7 +152,6 @@ public class FRMGame extends javax.swing.JFrame {
             stop = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/stop.gif"));
             slow = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/slow.gif"));
             medium = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/medium.gif"));
-            fast = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/fast.gif"));
             hurt = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/hurt.gif"));
             attack = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/attack.gif"));
             dead = new ImageIcon(getClass().getResource("/assets/personajes/" + character + "/dead.gif"));
@@ -212,35 +212,9 @@ public class FRMGame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FRMGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FRMGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FRMGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FRMGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FRMGame().setVisible(true);
-            }
-        });
+        new FRMGame();
+
     }
 
     public PanelMenuPrincipal getPanelMenu() {

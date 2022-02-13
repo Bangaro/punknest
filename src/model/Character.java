@@ -16,7 +16,6 @@ public class Character implements Serializable{
     private int boosterDuration;
     
     private int life = 2;
-    private boolean dead = false;
     
     private int score;
     private String characterName;
@@ -50,13 +49,6 @@ public class Character implements Serializable{
         this.life = life;
     }
 
-    public boolean isDead() {
-        return dead;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
-    }
 
     public int getScore() {
         return score;

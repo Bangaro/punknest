@@ -83,6 +83,7 @@ public class PanelMenuPrincipal extends javax.swing.JPanel {
 
         pickPlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/pick-player.gif"))); // NOI18N
         pickPlayer.setActionCommand("pickPlayer");
+        pickPlayer.setBorderPainted(false);
         pickPlayer.setContentAreaFilled(false);
         pickPlayer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pickPlayer.addActionListener(new java.awt.event.ActionListener() {

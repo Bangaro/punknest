@@ -98,6 +98,7 @@
           <Image iconType="3" name="/assets/misc/titles/pick-player.gif"/>
         </Property>
         <Property name="actionCommand" type="java.lang.String" value="pickPlayer"/>
+        <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Hand Cursor"/>

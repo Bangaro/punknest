@@ -6,6 +6,7 @@ package model;
 
 import controller.FRMGameController;
 import static controller.FRMGameController.menuActive;
+import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.FRMGame;
@@ -19,6 +20,7 @@ public class GameThread extends Thread {
     FRMGame frame;
     Sound sound;
 
+    public static boolean characterDead = false;
     //booleans para activar transiciones
     public static boolean menuTransicionIn = true;
     public static boolean menuTransicionOut = false;
@@ -34,14 +36,21 @@ public class GameThread extends Thread {
     //PARA COLOCAR ANIMACIONES
     //ANIMACION HERIDO
     public static boolean isHurt = false;
-    public static int timeHurt = 3;
+    public static int timeHurt = 2;
     public static int countHurtTimer = 25;
 
     //ANIMACION BOOSTER DESTROY
     public static int timeBoosterDestroy = 7;
     public static int countBoosterDestroyTimer = 25;
 
-    //ANIMACION BOOSTER LIFE
+    //ANIMACION ENEMY
+    public static int random = 2;
+    public static int timeEnemyMovement = 6;
+    public static int countEnemyMovement = 25;
+
+    //MUSIC SPECIAL CHANGE
+    public static boolean specialMusic = false;
+
     public static boolean musicActive = true;
 
     public static boolean inGame = false;
@@ -77,30 +86,38 @@ public class GameThread extends Thread {
                 }
                 if (!FRMGameController.menuActive) {
 
-                    if (inGame && !musicActive) {
-                        music(1);
-                        musicActive = true;
-                        //Asigna la velocidad inicial del juego
-                        FRMGame.gameSpeed = 2;
-                    }
+                    if (!characterDead) {
+                        frame.getPanelGame().score();
+                        enemyMovement();
+                        frame.getPanelGame().boosterActive();
+                        frame.getPanelGame().charactherHurt();
 
-                    if (frame.getPanelGame().getCharacterInGame().isBoosterActive()) {
-                        if (timeBoosterDestroy == 7 && countBoosterDestroyTimer == 24) {
-                            music(2);
+                        if (inGame && !musicActive && !FRMGameController.menuActive) {
+                            music(1);
+                            musicActive = true;
+                            //Asigna la velocidad inicial del juego
+                            FRMGame.gameSpeed = 2;
                         }
-                        if (timeBoosterDestroy == 1 && countBoosterDestroyTimer == 1) {
-                            musicActive = false;
+
+                        if (frame.getPanelGame().getCharacterInGame().isBoosterActive()) {
+                            if (specialMusic) {
+                                music(2);
+                            }
+
+                            animationBoosterDestroy();
                         }
-                        animationBoosterDestroy();
-                    }
-                    if (isHurt) {
-                        animationHurt();
-                    }
+                        if (isHurt) {
+                            animationHurt();
+                        }
 
-                    frame.getPanelGame().transitionGame();
-                    frame.moveCharacter();
+                        frame.getPanelGame().transitionGame();
+                        frame.moveCharacter();
 
-                    setLevel();
+                        setLevel();
+
+                    } else {
+                        JOptionPane.showMessageDialog(null,"");
+                    }
 
                 }
                 sleep(40);
@@ -133,7 +150,7 @@ public class GameThread extends Thread {
                 countBoosterDestroyTimer = 25;
             }
         }
-        if (timeBoosterDestroy == 0) {
+        if (timeBoosterDestroy == 0 ) {
             frame.getPanelGame().getCharacterInGame().setBoosterActive(false);
             timeLevel = 18;
             timeBoosterDestroy = 5;
@@ -150,9 +167,26 @@ public class GameThread extends Thread {
         }
         if (timeHurt == 0) {
             isHurt = false;
-            timeHurt = 18;
-            timeHurt = 5;
+            timeHurt = 2;
         }
+    }
+
+    private void enemyMovement() {
+
+        frame.getPanelGame().enemyMovement(random);
+
+        if (timeEnemyMovement > 0) {
+            countEnemyMovement = countEnemyMovement - 1;
+            if (countEnemyMovement <= 0) {
+                timeEnemyMovement = timeEnemyMovement - 1;
+                countEnemyMovement = 25;
+            }
+        }
+        if (timeEnemyMovement == 0) {
+            random = new Random().nextInt(2);
+            timeEnemyMovement = 6;
+        }
+
     }
 
     public void music(int i) {

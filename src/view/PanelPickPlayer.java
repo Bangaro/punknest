@@ -40,7 +40,6 @@ public class PanelPickPlayer extends javax.swing.JPanel {
         dog1 = new javax.swing.JButton();
         dog2 = new javax.swing.JButton();
         biker = new javax.swing.JButton();
-        bird = new javax.swing.JButton();
         buildings = new javax.swing.JLabel();
         sidewalk = new javax.swing.JLabel();
         city = new javax.swing.JLabel();
@@ -51,6 +50,7 @@ public class PanelPickPlayer extends javax.swing.JPanel {
 
         pickPlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/misc/titles/pick-player.gif"))); // NOI18N
         pickPlayer.setActionCommand("pickPlayer");
+        pickPlayer.setBorderPainted(false);
         pickPlayer.setContentAreaFilled(false);
         pickPlayer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pickPlayer.addActionListener(new java.awt.event.ActionListener() {
@@ -97,12 +97,6 @@ public class PanelPickPlayer extends javax.swing.JPanel {
         biker.setContentAreaFilled(false);
         add(biker, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, -1, -1));
 
-        bird.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/personajes/bird/presentation.gif"))); // NOI18N
-        bird.setActionCommand("bird");
-        bird.setBorderPainted(false);
-        bird.setContentAreaFilled(false);
-        add(bird, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
-
         buildings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondos/buildings1.png"))); // NOI18N
         add(buildings, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -123,7 +117,6 @@ public class PanelPickPlayer extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton biker;
-    private javax.swing.JButton bird;
     private javax.swing.JLabel buildings;
     private javax.swing.JLabel city;
     private javax.swing.JButton cyborg;
@@ -137,7 +130,6 @@ public class PanelPickPlayer extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void escuchar(ActionListener controller) {
-        bird.addActionListener(controller);
         dog1.addActionListener(controller);
         dog2.addActionListener(controller);
         cyborg.addActionListener(controller);
