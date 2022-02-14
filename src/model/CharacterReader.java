@@ -18,7 +18,7 @@ public class CharacterReader {
     public CharacterReader(String fichero) {
         this.fichero = fichero;
     }
-   public ArrayList<Character> getClientes(){
+   public ArrayList<Character> getCharacters(){
        ArrayList<Character> objetos = new ArrayList();
       
        try{

@@ -6,6 +6,7 @@ package model;
 
 import controller.FRMGameController;
 import static controller.FRMGameController.menuActive;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,6 +21,9 @@ public class GameThread extends Thread {
 
     FRMGame frame;
     Sound sound;
+    CharacterWriter writer = new CharacterWriter("CHARACTERSCORE.DATA");
+    CharacterReader reader = new CharacterReader("CHARACTERSCORE.DATA");
+    private ArrayList<Character> elements = reader.getCharacters();
 
     public static boolean announcementDisplay = false;
 
@@ -120,10 +124,16 @@ public class GameThread extends Thread {
                         setLevel();
 
                     } else {
-                        //LOIGICA Y PANEL DEAD
-                        JOptionPane.showMessageDialog(null, "");
+                        String name = JOptionPane.showInputDialog("GAME OVER\n ENTER YOUR NICKNAME");
+                        FRMGameController.menuActive = true;
+                        frame.getPanelGame().setVisible(false);
+                        GameThread.musicActive = true;
+                        frame.getPanelGame().getCharacterInGame().setScore(PanelGame.characterScore);
+                        frame.getPanelGame().getCharacterInGame().setNickname(name);
+                        elements.add(frame.getPanelGame().getCharacterInGame());
+                        writer.insertCharacter(elements);
+                        characterDead = false;
                     }
-
                 }
                 sleep(40);
             }

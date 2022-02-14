@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/view/PanelPickPlayer.java</file>
-            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/view/PanelGame.java</file>
-            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/model/Sound.java</file>
+            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/model/CharacterReader.java</file>
+            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/controller/PanelGameController.java</file>
             <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/controller/PanelPickPlayerController.java</file>
-            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/view/PanelMenuPrincipal.java</file>
             <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/model/Character.java</file>
+            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/view/PanelTopScorers.java</file>
             <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/view/FRMGame.java</file>
+            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/controller/PanelTopScorersController.java</file>
+            <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/model/CharacterWriter.java</file>
             <file>file:/C:/Users/monge/Documents/NetBeansProjects/proyecto/src/model/GameThread.java</file>
         </group>
     </open-files>

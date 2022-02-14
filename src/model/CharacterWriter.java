@@ -39,7 +39,7 @@ public class CharacterWriter {
             System.out.println(ex);
         }
     }
-    public void insertarCliente(ArrayList<Character> elementos){
+    public void insertCharacter(ArrayList<Character> elementos){
         ObjectOutputStream oos;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(fichero));
